@@ -53,9 +53,10 @@
 		</table>
 		
 		<script>
+		
 			jQuery(":input").bind('paste', function (event) {
 				var textarea = $(this);
-		
+				textarea.val(""); //clean the field before filling up with the new value
 				
 				var textareaIndex = 0;
 				var textareaTest = textarea;
