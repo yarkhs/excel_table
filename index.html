@@ -1,0 +1,93 @@
+<html>
+	<head>
+		<script src="jquery-3.1.0.js"></script>
+		<style>
+			textarea {
+			    resize: none;
+			    width: 80px;
+    			height: 20px;
+			}
+		</style>
+	</head>
+	
+	<body>
+		<table >
+			<thead>
+				<tr>
+					<td></td>
+					<td>Column 1</td>
+					<td>Column 2</td>
+					<td>Column 3</td>
+				</tr>
+			</thead>
+			
+			<tbody>
+				<tr>
+					<td>Row 1</td>
+					<td><textarea></textarea></td>
+					<td><textarea></textarea></td>
+					<td><textarea></textarea></td>
+				</tr>
+				
+				<tr>
+					<td>Row 2</td>
+					<td><textarea></textarea></td>
+					<td><textarea></textarea></td>
+					<td><textarea></textarea></td>
+				</tr>
+				
+				<tr>
+					<td>Row 3</td>
+					<td><textarea></textarea></td>
+					<td><textarea></textarea></td>
+					<td><textarea></textarea></td>
+				</tr>
+				
+				<tr>
+					<td>Row 4</td>
+					<td><textarea></textarea></td>
+					<td><textarea></textarea></td>
+					<td><textarea></textarea></td>
+				</tr>
+			</tbody>
+		</table>
+		
+		<script>
+			jQuery(":input").bind('paste', function (event) {
+				var textarea = $(this);
+				textarea.val("");
+				
+				var textareaIndex = 0;
+				var textareaTest = textarea;
+				
+				while (textareaTest.parent().prev().find('textarea').length) {
+					textareaIndex++;
+					textareaTest = textareaTest.parent().prev().find('textarea');
+				}
+				
+				setTimeout(function(){
+					var tabelaExcel = textarea.val().split("\n");
+					
+					for ( var i = 0; i < tabelaExcel.length -1; i++) {
+						tabelaExcel[i] = tabelaExcel[i].split(String.fromCharCode(9));
+						
+						for ( var j = 0; j < tabelaExcel[i].length; j++) {
+							textarea.val(tabelaExcel[i][j]);
+							
+							if(!textarea.parent().next().find('textarea').length)
+								break;
+							
+							textarea = textarea.parent().next().find('textarea').first();
+						}
+						
+						textarea = textarea.parent().parent().next().find('textarea').first();
+						
+						for ( var int = 0; int < textareaIndex; int++) {
+							textarea = textarea.parent().next().find('textarea').first();
+						}
+					}
+				},0); 
+			});
+		</script>
+	</body>
+</html>
